@@ -1,0 +1,27 @@
+allprojects {
+    group = 'com.manning.gia'
+    version = '0.1'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+    ext.configDir = new File(rootDir, 'config')
+    ext.checkstyleConfigDir = "$configDir/checkstyle"
+    checkstyle {
+        toolVersion = '5.6'
+        configDirectory = new File(checkstyleConfigDir)
+        ignoreFailures = true
+        showViolations = false
+        sourceSets = sourceSets.findAll{it.name == 'main'}
+    }
+    repositories {
+        maven {
+            url "https://repo1.maven.org/maven2/"
+        }
+
+        maven {
+            url "https://repo.spring.io/plugins-release/"
+        }
+    }
+}
